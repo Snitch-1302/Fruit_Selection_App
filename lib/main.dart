@@ -42,17 +42,22 @@ class _UserInputScreenState extends State<UserInputScreen> {
     super.initState();
     platform.setMethodCallHandler((call) async {
       if (call.method == 'fruitsSelected') {
-        final fruits = List<String>.from(call.arguments);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FruitDisplayScreen(fruits: fruits),
-          ),
-        );
+        final List<dynamic>? fruits = call.arguments as List<dynamic>?;
+        if (fruits != null && fruits.isNotEmpty) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  FruitDisplayScreen(fruits: List<String>.from(fruits)),
+            ),
+          );
+        } else {
+          print('No fruits selected or invalid data received.');
+        }
       }
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,7 +165,8 @@ class FruitDisplayScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(fruits[index]),
-            leading: Image.asset('assets/images/${fruits[index].toLowerCase()}.png'),
+            leading:
+                Image.asset('assets/images/${fruits[index].toLowerCase()}.png'),
           );
         },
       ),

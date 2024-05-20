@@ -59,8 +59,6 @@ class MainActivity : FlutterActivity() {
         }
     }
 }
-
-
     override fun onDestroy() {
         if (::tts.isInitialized) {
             tts.stop()

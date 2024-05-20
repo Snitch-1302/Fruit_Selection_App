@@ -26,8 +26,9 @@ class FruitSelectionActivity : AppCompatActivity() {
 
             val intent = Intent()
             intent.putStringArrayListExtra("selectedFruits", ArrayList(selectedFruits))
-            setResult(Activity.RESULT_OK, intent)
+            setResult(Activity.RESULT_OK, intent) // Set the result here
             finish()
         }
     }
 }
+
