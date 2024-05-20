@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <CheckBox
+        android:id="@+id/checkbox_apple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apple" />
+
+    <CheckBox
+        android:id="@+id/checkbox_banana"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Banana" />
+
+    <CheckBox
+        android:id="@+id/checkbox_cherry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cherry" />
+
+    <Button
+        android:id="@+id/button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+</LinearLayout>
