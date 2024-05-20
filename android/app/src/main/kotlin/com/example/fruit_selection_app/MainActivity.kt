@@ -35,6 +35,12 @@ class MainActivity : FlutterActivity() {
             } else if (call.method == "startFruitSelection") {
                 startFruitSelectionActivity()
                 result.success(null)
+            } else if (call.method == "fruitsSelected") {
+                val selectedFruits = call.arguments as ArrayList<String>?
+                val intent = Intent()
+                intent.putStringArrayListExtra("selectedFruits", selectedFruits)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
             } else {
                 result.notImplemented()
             }

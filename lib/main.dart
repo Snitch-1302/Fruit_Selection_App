@@ -38,27 +38,6 @@ class _UserInputScreenState extends State<UserInputScreen> {
   static const platform = MethodChannel('com.example.app/tts');
 
   @override
-  void initState() {
-    super.initState();
-    platform.setMethodCallHandler((call) async {
-      if (call.method == 'fruitsSelected') {
-        final List<dynamic>? fruits = call.arguments as List<dynamic>?;
-        if (fruits != null && fruits.isNotEmpty) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  FruitDisplayScreen(fruits: List<String>.from(fruits)),
-            ),
-          );
-        } else {
-          print('No fruits selected or invalid data received.');
-        }
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('User Input')),
