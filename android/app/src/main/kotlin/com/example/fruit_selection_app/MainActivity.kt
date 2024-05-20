@@ -25,7 +25,7 @@ class MainActivity : FlutterActivity() {
                 tts.language = Locale.US
             }
         }
-        
+
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             if (call.method == "speak") {
                 val data = call.arguments as Map<String, String>
@@ -39,26 +39,32 @@ class MainActivity : FlutterActivity() {
                 result.notImplemented()
             }
         }
-        
     }
 
     private fun startFruitSelectionActivity() {
+        Log.d("MainActivity", "Starting FruitSelectionActivity")
         val intent = Intent(this, FruitSelectionActivity::class.java)
-        startActivityForResult(intent, REQUEST_CODE)
+        try {
+            startActivityForResult(intent, REQUEST_CODE)
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Failed to start FruitSelectionActivity", e)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-        val selectedFruits = data?.getStringArrayListExtra("selectedFruits")
-        Log.d("MainActivity", "Selected fruits: $selectedFruits")
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val selectedFruits = data?.getStringArrayListExtra("selectedFruits")
+            Log.d("MainActivity", "Selected fruits: $selectedFruits")
 
-        flutterEngine?.dartExecutor?.binaryMessenger?.let { messenger ->
-            val resultChannel = MethodChannel(messenger, CHANNEL)
-            resultChannel.invokeMethod("fruitsSelected", selectedFruits)
+            selectedFruits?.let {
+                flutterEngine?.dartExecutor?.binaryMessenger?.let { messenger ->
+                    MethodChannel(messenger, CHANNEL).invokeMethod("fruitsSelected", selectedFruits)
+                }
+            }
         }
     }
-}
+
     override fun onDestroy() {
         if (::tts.isInitialized) {
             tts.stop()

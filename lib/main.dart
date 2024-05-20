@@ -127,33 +127,14 @@ class _UserInputScreenState extends State<UserInputScreen> {
   Future<void> _startNativeFruitSelection() async {
     try {
       await platform.invokeMethod('startFruitSelection');
-      // The result will be handled through the MethodChannel callback in initState
     } on PlatformException catch (e) {
       print("Failed to start fruit selection: '${e.message}'.");
     }
   }
-  /*
-  Future<void> _startNativeFruitSelection() async {
-    try {
-      final result = await platform.invokeMethod<List>('startFruitSelection');
-      if (result != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FruitDisplayScreen(fruits: List<String>.from(result)),
-          ),
-        );
-      }
-    } on PlatformException catch (e) {
-      print("Failed to get fruits: '${e.message}'.");
-    }
-  }
-  */
 }
 
 class FruitDisplayScreen extends StatelessWidget {
   final List<String> fruits;
-
   const FruitDisplayScreen({super.key, required this.fruits});
 
   @override
