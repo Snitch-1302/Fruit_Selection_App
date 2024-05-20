@@ -58,18 +58,19 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val selectedFruits = data?.getStringArrayListExtra("selectedFruits")
-            Log.d("MainActivity", "Selected fruits: $selectedFruits")
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        val selectedFruits = data?.getStringArrayListExtra("selectedFruits")
+        Log.d("MainActivity", "Selected fruits: $selectedFruits")
 
-            selectedFruits?.let {
-                flutterEngine?.dartExecutor?.binaryMessenger?.let { messenger ->
-                    MethodChannel(messenger, CHANNEL).invokeMethod("fruitsSelected", selectedFruits)
-                }
+        selectedFruits?.let {
+            flutterEngine?.dartExecutor?.binaryMessenger?.let { messenger ->
+                MethodChannel(messenger, CHANNEL).invokeMethod("fruitsSelected", selectedFruits)
             }
         }
     }
+}
+
 
     override fun onDestroy() {
         if (::tts.isInitialized) {
